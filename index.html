@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="广东高新技术企业三维数据指挥中心：21个地市高企名录、认定政策与申报工具入口。">
+    <meta name="theme-color" content="#020811">
+    <title>广东高企创新指挥中心</title>
+    <link rel="stylesheet" href="assets/command-center.css">
+    <script type="module" src="assets/vendor/command-center.bundle.js"></script>
+  </head>
+  <body>
+    <a class="cc-skip" href="#city-detail">跳到城市数据</a>
+    <canvas id="globe-canvas" aria-hidden="true"></canvas>
+    <div class="space-noise" aria-hidden="true"></div>
+
+    <div class="cc-shell">
+      <header class="cc-header">
+        <a class="cc-brand" href="index.html" aria-label="广东高企创新指挥中心首页">
+          <span class="cc-brand-mark"><i></i><i></i><i></i></span>
+          <span><strong>广东高企创新指挥中心</strong><small>GUANGDONG HNTE INTELLIGENCE</small></span>
+        </a>
+        <nav class="cc-nav" aria-label="产品导航">
+          <a class="is-active" href="index.html">指挥中心</a>
+          <a href="workspace.html">数据工作台</a>
+          <a href="audit.html">资料审核</a>
+          <a href="organizer.html">智能整理</a>
+          <a href="draft.html">文件起草</a>
+          <a href="guide.html">政策指南</a>
+        </nav>
+        <div class="cc-system-status">
+          <span><i></i> DATA VERIFIED</span>
+          <time datetime="2026-10-23">2026.10.23</time>
+        </div>
+      </header>
+
+      <main class="cc-main">
+        <aside class="city-rail" aria-label="广东地市高新技术企业名录">
+          <div class="rail-title">
+            <p>REGIONAL OVERVIEW</p>
+            <h1>广东高企<br><span>城市矩阵</span></h1>
+            <p class="rail-note">2025 年认定/备案名录口径，深圳单独列示。</p>
+          </div>
+
+          <div class="rail-stats">
+            <div><span>省级名录</span><strong>11,871</strong><small>不含深圳</small></div>
+            <div><span>深圳首批</span><strong>7,249</strong><small>备案名录</small></div>
+          </div>
+
+          <div class="rail-filter">
+            <span>城市名录</span>
+            <span id="city-count">21 地市</span>
+          </div>
+          <div class="city-ranking" id="city-ranking"></div>
+
+          <div class="rail-source">
+            <span class="source-dot"></span>
+            <p>数据源：广东省科技厅 2025 年高企名单及深圳首批备案公开名录</p>
+            <a href="https://gdstc.gd.gov.cn/zwgk_n/tzgg/content/post_4850173.html" target="_blank" rel="noopener noreferrer" aria-label="打开广东省2025年高企名单">↗</a>
+          </div>
+        </aside>
+
+        <section class="globe-zone" id="globe-zone" aria-label="广东省三维地图">
+          <div class="globe-caption">
+            <span>EARTH / 23.13°N 113.26°E</span>
+            <span class="signal"><i></i> LIVE NETWORK</span>
+          </div>
+          <div class="map-heading">
+            <p>GUANGDONG PROVINCE</p>
+            <h2>高新技术企业<br><span>创新引力场</span></h2>
+            <div class="map-metric">
+              <span>已核验地市</span>
+              <strong>21 / 21</strong>
+            </div>
+          </div>
+
+          <div class="province-map" id="province-map">
+            <svg id="map-svg" viewBox="0 0 700 540" role="img" aria-labelledby="map-title map-desc">
+              <title id="map-title">广东省地级市高新技术企业分布图</title>
+              <desc id="map-desc">以2025年认定或备案名录数量着色，可点击城市查看详情。</desc>
+              <defs>
+                <linearGradient id="scan-gradient" x1="0" x2="1">
+                  <stop offset="0" stop-color="#27ddff" stop-opacity="0"></stop>
+                  <stop offset=".45" stop-color="#27ddff" stop-opacity=".9"></stop>
+                  <stop offset="1" stop-color="#27ddff" stop-opacity="0"></stop>
+                </linearGradient>
+                <filter id="city-glow" x="-60%" y="-60%" width="220%" height="220%">
+                  <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+                  <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+                </filter>
+              </defs>
+              <g class="map-grid" aria-hidden="true"></g>
+              <g id="map-paths"></g>
+              <g class="map-leaders" id="map-leaders" aria-hidden="true"></g>
+              <g class="map-scan" aria-hidden="true">
+                <rect x="0" y="-30" width="700" height="2" fill="url(#scan-gradient)"></rect>
+              </g>
+            </svg>
+            <div class="map-city-labels" id="map-city-labels"></div>
+            <span class="map-crosshair crosshair-a" aria-hidden="true"></span>
+            <span class="map-crosshair crosshair-b" aria-hidden="true"></span>
+            <div class="map-legend">
+              <span><i class="legend-dot low"></i>低</span>
+              <span><i class="legend-dot mid"></i>中</span>
+              <span><i class="legend-dot high"></i>高</span>
+              <span class="legend-metric">2025 名录数</span>
+            </div>
+          </div>
+
+          <div class="globe-controls">
+            <button type="button" id="focus-guangdong" aria-label="将三维地球重新聚焦广东">
+              <span aria-hidden="true">◎</span> 聚焦广东
+            </button>
+            <label class="mobile-city-picker">
+              <span class="sr-only">选择广东地市</span>
+              <select id="mobile-city-select" aria-label="选择广东地市"></select>
+            </label>
+            <span>拖拽旋转地球 · 滚轮缩放</span>
+          </div>
+
+          <div class="scan-coordinate left-coordinate">113°16′E<br>23°07′N</div>
+          <div class="scan-coordinate right-coordinate">SYS / GBA-21<br>DATASET / 2025</div>
+        </section>
+
+        <aside class="city-detail" id="city-detail" aria-live="polite">
+          <div class="detail-head">
+            <div>
+              <span class="detail-index" id="detail-index">01</span>
+              <p>SELECTED CITY</p>
+            </div>
+            <span class="detail-live"><i></i> ONLINE</span>
+          </div>
+
+          <div class="selected-city-title">
+            <h2 id="selected-city-name">深圳</h2>
+            <span id="selected-city-code">440300</span>
+          </div>
+
+          <div class="primary-metric">
+            <span>2025 年认定 / 备案</span>
+            <div><strong id="selected-count">7,249</strong><small>家</small></div>
+            <p id="selected-count-note">深圳首批备案名录；深圳认定工作单独组织。</p>
+          </div>
+
+          <div class="metric-share">
+            <div><span>省名录占比</span><strong id="selected-share">单列</strong></div>
+            <div class="share-track"><i id="selected-share-bar"></i></div>
+          </div>
+
+          <div class="detail-divider"><span>POLICY PULSE</span><i></i></div>
+
+          <div class="policy-feed" id="policy-feed">
+            <a class="policy-card policy-primary" href="https://gdstc.gd.gov.cn/zwgk_n/tzgg/content/post_4904061.html" target="_blank" rel="noopener noreferrer">
+              <span class="policy-type">省级 · 最新通知 · 2026 批次已收官</span>
+              <strong>2026 年高新技术企业认定工作</strong>
+              <small>粤科函产字〔2026〕903号 · 2026-05-29</small>
+              <b>查看原文 ↗</b>
+            </a>
+            <a class="policy-card" href="https://gdstc.gd.gov.cn/zwgk_n/tzgg/content/post_4934973.html" target="_blank" rel="noopener noreferrer">
+              <span class="policy-type">时间调整</span>
+              <strong>第二批、第三批申报时间延长</strong>
+              <small>粤科函产字〔2026〕1359号 · 2026-07-29</small>
+              <b>查看原文 ↗</b>
+            </a>
+            <a class="policy-card" id="local-policy-link" href="https://www.sz.gov.cn/cn/xxgk/zfxxgj/tzgg/content/post_12850471.html" target="_blank" rel="noopener noreferrer">
+              <span class="policy-type">城市政策入口</span>
+              <strong id="local-policy-title">深圳市 2026 年认定工作通知</strong>
+              <small id="local-policy-meta">深圳市工业和信息化局 · 2026-06-18</small>
+              <b>查看本地政策 ↗</b>
+            </a>
+          </div>
+
+          <div class="city-contact">
+            <span>本地咨询</span>
+            <a id="city-phone" href="tel:075526548598">0755-26548598</a>
+            <a id="city-portal" href="https://gxj.sz.gov.cn/" target="_blank" rel="noopener noreferrer">主管部门入口 ↗</a>
+          </div>
+
+          <div class="detail-action">
+            <a href="audit.html">用本城市口径检查申报资料 <span>→</span></a>
+          </div>
+
+          <p class="detail-disclaimer">
+            2025 名录数不等于当前有效存量。地图用于公开名录的空间比较，不构成认定结论。
+          </p>
+        </aside>
+      </main>
+
+      <section class="feature-dock" aria-labelledby="feature-title">
+        <div class="dock-heading">
+          <span id="feature-title">AUTHORITY TOOLS</span>
+          <small>从数据洞察进入资料工作流</small>
+        </div>
+        <nav class="feature-links" aria-label="高企申报功能入口">
+          <a href="audit.html">
+            <span class="feature-index">01</span>
+            <span class="feature-code">AUDIT</span>
+            <strong>资料审核</strong>
+            <small>导入整套文件并检查风险</small>
+            <b>→</b>
+          </a>
+          <a href="organizer.html">
+            <span class="feature-index">02</span>
+            <span class="feature-code">ORGANIZE</span>
+            <strong>智能整理</strong>
+            <small>重组 IP / RD / PS 证据链</small>
+            <b>→</b>
+          </a>
+          <a href="draft.html">
+            <span class="feature-index">03</span>
+            <span class="feature-code">DRAFT</span>
+            <strong>文件起草</strong>
+            <small>生成研发、产品与转化草稿</small>
+            <b>→</b>
+          </a>
+          <a href="guide.html">
+            <span class="feature-index">04</span>
+            <span class="feature-code">POLICY</span>
+            <strong>政策指南</strong>
+            <small>八项条件与 100 分评分</small>
+            <b>→</b>
+          </a>
+          <a href="workspace.html">
+            <span class="feature-index">05</span>
+            <span class="feature-code">WORKSPACE</span>
+            <strong>数据工作台</strong>
+            <small>项目状态与最近资料</small>
+            <b>→</b>
+          </a>
+        </nav>
+      </section>
+
+      <footer class="cc-footer">
+        <span>DATA VERIFIED 2026.10.23</span>
+        <span>广东省科学技术厅 / 深圳市工业和信息化局 / DataV GeoAtlas</span>
+        <a href="forest.html">FOREST / LAB ↗</a>
+        <a href="docs/ARCHITECTURE.md">METHODOLOGY</a>
+      </footer>
+    </div>
+
+    <div class="map-tooltip" id="map-tooltip" role="tooltip"></div>
+    <noscript><div class="noscript-note">需要启用 JavaScript 才能显示三维地球与交互地图。</div></noscript>
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="把高企资料按主体、知识产权、研发、产品和收入自动归组，形成可导出的整理方案。">
+    <meta name="theme-color" content="#0f4c45">
+    <title>智能整理 · 高企申报工作台</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/workspace.css">
+    <link rel="stylesheet" href="assets/experience.css">
+    <script defer src="assets/engine.js"></script>
+    <script defer src="assets/vendor/jszip.min.js"></script>
+  </head>
+  <body class="workspace-page experience-page" data-experience="organizer" data-scene-word="ORBIT">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <div class="protocol-warning" id="protocol-warning"><strong>需要启动本地工作台</strong><span>请在项目目录运行 <code>npm start</code>。</span></div>
+
+    <header class="site-header" id="top">
+      <div class="header-inner workspace-header">
+        <a class="brand" href="index.html" aria-label="返回工作台首页">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M9 32V17l13-8 13 8v15H9Z"></path><path d="M16 32V21h12v11M17 25h10M22 17v8"></path></svg></span>
+          <span class="brand-copy"><strong>高企申报工作台</strong><small>HNTE WORKSPACE</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">打开导航</span></button>
+        <nav class="site-nav workspace-nav" id="site-nav" aria-label="主导航">
+          <a data-page="dashboard" href="index.html">指挥中心</a>
+          <a data-page="audit" href="audit.html">资料审核</a>
+          <a data-page="organizer" href="organizer.html">智能整理</a>
+          <a data-page="draft" href="draft.html">文件起草</a>
+          <a data-page="guide" href="guide.html">政策指南</a>
+        </nav>
+        <a class="policy-chip" href="audit.html"><span></span> 本地资料库</a>
+      </div>
+    </header>
+
+    <main id="main" class="app-main">
+      <section class="page-title-row">
+        <div>
+          <p class="eyebrow"><span>ORGANIZER</span> 从一堆文件到一套证据</p>
+          <h1>智能整理</h1>
+          <p>按申报材料类别重新归组，识别主体、IP、RD、PS、人员、财务和收入证据，生成建议命名与归档清单。</p>
+        </div>
+        <div class="title-actions">
+          <a class="button button-ghost" href="audit.html">继续导入资料</a>
+          <button class="button button-primary" id="auto-organize" type="button">自动重新分类</button>
+        </div>
+      </section>
+
+      <section class="organizer-summary">
+        <div><span>文件总数</span><strong id="organizer-total">0</strong></div>
+        <div><span>材料类别</span><strong id="organizer-categories">0 / 11</strong></div>
+        <div><span>待分类</span><strong id="organizer-other">0</strong></div>
+        <div><span>建议处理</span><strong id="organizer-findings">0</strong></div>
+        <div class="organizer-actions">
+          <button class="button button-ghost" id="export-csv" type="button">导出整理表 CSV</button>
+          <button class="button button-primary" id="export-plan" type="button">导出 Markdown 方案</button>
+        </div>
+      </section>
+
+      <div class="organizer-layout">
+        <aside class="category-rail">
+          <div class="rail-heading"><p class="section-kicker">EVIDENCE MAP</p><h2>证据地图</h2></div>
+          <div class="evidence-chain-vertical">
+            <button data-filter="ip" type="button"><span>IP</span><div><strong>知识产权</strong><small id="chain-ip">0 个文件</small></div></button>
+            <i aria-hidden="true"></i>
+            <button data-filter="rd" type="button"><span>RD</span><div><strong>研发活动</strong><small id="chain-rd">0 个文件</small></div></button>
+            <i aria-hidden="true"></i>
+            <button data-filter="product" type="button"><span>PS</span><div><strong>产品与服务</strong><small id="chain-ps">0 个文件</small></div></button>
+            <i aria-hidden="true"></i>
+            <button data-filter="contract" type="button"><span>¥</span><div><strong>合同与收入</strong><small id="chain-revenue">0 个文件</small></div></button>
+          </div>
+          <div class="rail-divider"></div>
+          <div class="category-list" id="category-list"></div>
+          <button class="rail-all is-active" type="button" data-filter="">全部文件 <span id="rail-all-count">0</span></button>
+        </aside>
+
+        <div class="organizer-main">
+          <div class="organizer-toolbar">
+            <div><h2 id="organizer-title">全部资料</h2><p id="organizer-copy">文件按自动识别结果归组。</p></div>
+            <label class="search-box"><span class="sr-only">搜索资料</span><input id="organizer-search" type="search" placeholder="搜索文件名"></label>
+          </div>
+
+          <div class="organizer-groups" id="organizer-groups">
+            <div class="empty-state large-empty">
+              <span>0</span>
+              <h3>资料库还是空的</h3>
+              <p>先到资料审核页导入文件，系统会自动完成第一轮分类。</p>
+              <a class="button button-primary" href="audit.html">导入资料</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="organizer-side">
+          <section class="panel missing-panel">
+            <div class="panel-heading compact"><div><p class="section-kicker">GAPS</p><h2>缺少的类别</h2></div></div>
+            <div class="missing-list" id="missing-list"><p class="muted-copy">导入资料后显示。</p></div>
+          </section>
+          <section class="panel naming-rule">
+            <strong>建议命名规则</strong>
+            <code>类别_年份_文件主体.扩展名</code>
+            <p>命名只用于整理，不改变原始文件；下载原件时仍保留原文件名。</p>
+          </section>
+          <section class="panel organizer-tip">
+            <span aria-hidden="true">i</span>
+            <p>自动分类看文件名和正文关键词。低置信度文件应在资料审核页人工确认。</p>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="site-footer workspace-footer">
+      <div><strong>智能整理</strong><p>整理归组用于申报准备，不改变材料的真实性要求。</p></div>
+      <div class="footer-links"><a href="draft.html">下一步：文件起草 →</a><a href="audit.html">返回审核</a></div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script defer src="assets/vendor/experience.bundle.js"></script>
+    <script type="module" src="assets/organizer.js"></script>
+  </body>
+</html>

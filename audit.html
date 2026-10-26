@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="批量导入高企资料，自动抽取、分类、检查材料覆盖和企业指标。">
+    <meta name="theme-color" content="#0f4c45">
+    <title>资料审核 · 高企申报工作台</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/workspace.css">
+    <link rel="stylesheet" href="assets/experience.css">
+    <script defer src="assets/engine.js"></script>
+    <script defer src="assets/vendor/mammoth.browser.min.js"></script>
+    <script defer src="assets/vendor/read-excel-file.min.js"></script>
+    <script defer src="assets/vendor/jszip.min.js"></script>
+  </head>
+  <body class="workspace-page experience-page" data-experience="audit" data-scene-word="AUDIT">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <div class="protocol-warning" id="protocol-warning">
+      <strong>需要启动本地工作台</strong>
+      <span>请在项目目录运行 <code>npm start</code>，再打开浏览器地址。</span>
+    </div>
+
+    <header class="site-header" id="top">
+      <div class="header-inner workspace-header">
+        <a class="brand" href="index.html" aria-label="返回工作台首页">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M9 32V17l13-8 13 8v15H9Z"></path><path d="M16 32V21h12v11M17 25h10M22 17v8"></path></svg></span>
+          <span class="brand-copy"><strong>高企申报工作台</strong><small>HNTE WORKSPACE</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">打开导航</span></button>
+        <nav class="site-nav workspace-nav" id="site-nav" aria-label="主导航">
+          <a data-page="dashboard" href="index.html">指挥中心</a>
+          <a data-page="audit" href="audit.html">资料审核</a>
+          <a data-page="organizer" href="organizer.html">智能整理</a>
+          <a data-page="draft" href="draft.html">文件起草</a>
+          <a data-page="guide" href="guide.html">政策指南</a>
+        </nav>
+        <a class="policy-chip" href="guide.html#sources"><span></span> 政策基准 2026.10.23</a>
+      </div>
+    </header>
+
+    <main id="main" class="app-main">
+      <section class="page-title-row">
+        <div>
+          <p class="eyebrow"><span>AUDIT CENTER</span> 文件结构 + 企业指标 + 证据风险</p>
+          <h1>资料审核</h1>
+          <p>把整套文件拖进来，系统先在本地抽取文字、自动归类，再从材料覆盖、指标门槛、重复文件和敏感信息四个层面给出问题清单。</p>
+        </div>
+        <div class="title-actions">
+          <button class="button button-ghost" id="export-audit" type="button">导出审核报告</button>
+          <button class="button button-primary" id="audit-now" type="button">重新审核</button>
+        </div>
+      </section>
+
+      <div class="audit-layout">
+        <div class="audit-main">
+          <section class="dropzone-card" id="dropzone">
+            <input id="file-input" type="file" multiple hidden>
+            <input id="folder-input" type="file" multiple webkitdirectory directory hidden>
+            <div class="dropzone-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><path d="M10 43v8a4 4 0 0 0 4 4h36a4 4 0 0 0 4-4v-8"></path><path d="M32 8v32M20 20l12-12 12 12"></path></svg>
+            </div>
+            <h2>拖入高企资料包</h2>
+            <p>支持 PDF、DOCX、XLSX、TXT、Markdown、CSV 和 ZIP。单个文件上限 80 MB，一次最多处理 300 个文件。</p>
+            <div class="dropzone-actions">
+              <button class="button button-primary" id="choose-files" type="button">选择文件</button>
+              <button class="button button-ghost" id="choose-folder" type="button">选择整个文件夹</button>
+            </div>
+            <div class="dropzone-footnote">资料仅保存在当前浏览器 IndexedDB 中，不会发送到服务器。</div>
+          </section>
+
+          <section class="upload-progress" id="upload-progress" hidden aria-live="polite">
+            <div class="upload-copy"><strong id="upload-stage">准备导入</strong><span id="upload-name"></span></div>
+            <div class="upload-bar"><i id="upload-bar"></i></div>
+            <span id="upload-count">0 / 0</span>
+          </section>
+          <section class="import-errors" id="import-errors" hidden aria-live="polite">
+            <strong>部分文件未导入或解析失败</strong>
+            <ul id="import-error-list"></ul>
+          </section>
+
+          <section class="panel profile-panel">
+            <details id="profile-details">
+              <summary>
+                <span class="summary-icon">指</span>
+                <div><strong>企业指标自查</strong><small>金额单位：万元；用于判断五项硬门槛，不会替代审计口径。</small></div>
+                <span class="summary-status" id="profile-status">未填写</span>
+                <span class="summary-chevron" aria-hidden="true">⌄</span>
+              </summary>
+              <form id="profile-form" class="profile-form">
+                <div class="form-section">
+                  <h3>主体与合规</h3>
+                  <div class="form-grid">
+                    <label class="field field-wide"><span>企业名称（仅本机保存）</span><input name="companyName" required placeholder="用于起草页自动带入"></label>
+                    <label class="field"><span>注册成立满 365 天</span><select name="registeredOverYear" required><option value="">请选择</option><option value="yes">是</option><option value="no">否 / 不确定</option></select></label>
+                    <label class="field"><span>拥有核心知识产权所有权</span><select name="ownsCoreIp" required><option value="">请选择</option><option value="yes">是</option><option value="no">否 / 不确定</option></select></label>
+                    <label class="field"><span>核心 IP 对主要产品有支撑</span><select name="coreIpSupportsProduct" required><option value="">请选择</option><option value="yes">是</option><option value="no">否 / 不确定</option></select></label>
+                    <label class="field"><span>核心技术属于重点支持领域</span><select name="inSupportedField" required><option value="">请选择</option><option value="yes">是</option><option value="no">否 / 不确定</option></select></label>
+                    <label class="field field-wide"><span>申请前一年无适用重大事故或严重违法行为</span><select name="noMajorIncident" required><option value="">请选择</option><option value="yes">是</option><option value="no">否 / 不确定</option></select></label>
+                  </div>
+                </div>
+                <div class="form-section">
+                  <h3>人员与研发投入</h3>
+                  <div class="form-grid form-grid-four">
+                    <label class="field"><span>职工总数（人）</span><input name="totalEmployees" type="number" min="0" step="1" required></label>
+                    <label class="field"><span>科技人员数（人）</span><input name="techEmployees" type="number" min="0" step="1" required></label>
+                    <label class="field"><span>最近一年销售收入</span><input name="latestSalesWan" type="number" min="0" step="0.01" required></label>
+                    <label class="field"><span>近三年销售收入合计</span><input name="salesWan" type="number" min="0" step="0.01" required></label>
+                    <label class="field"><span>近三年研发费用合计</span><input name="rdExpensesWan" type="number" min="0" step="0.01" required></label>
+                    <label class="field"><span>其中境内研发费用</span><input name="domesticRdWan" type="number" min="0" step="0.01" required></label>
+                  </div>
+                </div>
+                <div class="form-section">
+                  <h3>近一年收入</h3>
+                  <div class="form-grid">
+                    <label class="field"><span>高新技术产品（服务）收入</span><input name="highTechRevenueWan" type="number" min="0" step="0.01" required></label>
+                    <label class="field"><span>企业总收入</span><input name="totalRevenueWan" type="number" min="0" step="0.01" required></label>
+                  </div>
+                </div>
+                <div class="profile-result" id="profile-result" aria-live="polite"></div>
+                <div class="form-actions">
+                  <button class="button button-primary" type="submit">保存并重新审核</button>
+                  <span class="form-hint">建议先用审计后数据做结构判断。</span>
+                </div>
+              </form>
+            </details>
+          </section>
+
+          <section class="panel file-library" id="library">
+            <div class="library-head">
+              <div>
+                <p class="section-kicker">DOCUMENT LIBRARY</p>
+                <h2>资料文件 <span id="document-count">0</span></h2>
+              </div>
+              <div class="library-tools">
+                <label class="search-box">
+                  <span class="sr-only">搜索文件</span>
+                  <input type="search" id="document-search" placeholder="搜索文件名或正文">
+                </label>
+                <select id="category-filter" aria-label="按材料类别筛选">
+                  <option value="">全部类别</option>
+                </select>
+              </div>
+            </div>
+            <div class="document-list" id="document-list">
+              <div class="empty-state">
+                <span>0</span>
+                <h3>还没有资料文件</h3>
+                <p>在上方选择文件、整个文件夹或 ZIP 压缩包。也可以先加载演示资料查看完整流程。</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="audit-side">
+          <section class="audit-score-card">
+            <div class="score-card-head"><span>结构审核</span><span>LOCAL</span></div>
+            <div class="audit-score-ring" id="audit-score-ring">
+              <div><strong id="audit-score">0</strong><span>/100</span></div>
+            </div>
+            <h2 id="audit-readiness">等待上传资料</h2>
+            <p id="audit-readiness-copy">系统将检查必要类别、解析状态、企业指标、重复文件和敏感信息。</p>
+            <div class="coverage-line">
+              <span>必要类别覆盖</span><strong id="coverage-text">0 / 11</strong>
+            </div>
+            <div class="coverage-bar"><i id="coverage-bar"></i></div>
+            <div class="score-mini-grid">
+              <div><strong id="stat-high">0</strong><span>高风险</span></div>
+              <div><strong id="stat-medium">0</strong><span>中风险</span></div>
+              <div><strong id="stat-ocr">0</strong><span>待 OCR</span></div>
+            </div>
+          </section>
+
+          <section class="panel findings-panel" id="findings">
+            <div class="findings-head">
+              <div><p class="section-kicker">FINDINGS</p><h2>审核发现</h2></div>
+              <span id="finding-count">0</span>
+            </div>
+            <div class="finding-list" id="finding-list">
+              <div class="finding-empty">导入资料后，这里会按严重程度列出缺失、解析失败、重复和指标风险。</div>
+            </div>
+          </section>
+
+          <section class="panel audit-note">
+            <strong>审核边界</strong>
+            <p>系统可以识别材料结构和部分显性风险，但无法判断全部材料真实性、技术先进性或收入归集是否最终被专家认可。</p>
+          </section>
+
+          <button class="text-button danger-text" id="clear-documents" type="button">清空全部资料文件</button>
+        </aside>
+      </div>
+    </main>
+
+    <dialog class="document-dialog" id="document-dialog">
+      <div class="dialog-head">
+        <div><span class="file-badge" id="dialog-ext">FILE</span><h2 id="dialog-title">文件详情</h2></div>
+        <button type="button" id="dialog-close" aria-label="关闭">×</button>
+      </div>
+      <div class="dialog-meta" id="dialog-meta"></div>
+      <div class="dialog-controls">
+        <label class="field"><span>人工确认类别</span><select id="dialog-category"></select></label>
+        <button class="button button-primary" id="dialog-save-category" type="button">保存分类</button>
+        <button class="button button-ghost" id="dialog-download" type="button">下载原件</button>
+      </div>
+      <div class="dialog-signals" id="dialog-signals"></div>
+      <div class="dialog-text-wrap">
+        <h3>抽取文本预览</h3>
+        <pre id="dialog-text"></pre>
+      </div>
+      <div class="dialog-footer">
+        <span id="dialog-parse-note"></span>
+        <button class="text-button danger-text" id="dialog-delete" type="button">删除此文件</button>
+      </div>
+    </dialog>
+
+    <footer class="site-footer workspace-footer">
+      <div><strong>资料审核</strong><p>文件结构辅助审核，不构成官方认定结论。</p></div>
+      <div class="footer-links"><a href="organizer.html">下一步：智能整理 →</a><a href="guide.html#sources">政策来源</a></div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script defer src="assets/vendor/experience.bundle.js"></script>
+    <script type="module" src="assets/audit.js"></script>
+  </body>
+</html>

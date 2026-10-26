@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
+      - name: Build browser bundles
+        run: npm run build
+      - name: Verify generated bundles are current
+        run: git diff --exit-code -- assets/vendor/command-center.bundle.js assets/vendor/experience.bundle.js 森林交互/forest.bundle.js
+      - name: Test engine
+        run: npm test
+      - name: Check project files
+        run: npm run check

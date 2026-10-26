@@ -1,0 +1,6 @@
+* text=auto eol=lf
+
+# Generated/minified browser bundles are reproducible from source.
+*.bundle.js -diff -text
+assets/vendor/*.js -diff -text
+assets/vendor/*.mjs -diff -text

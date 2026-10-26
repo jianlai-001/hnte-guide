@@ -1,0 +1,51 @@
+name: 页面或计算问题
+description: 报告功能、计算、可访问性、兼容性或文档错误
+title: "[问题] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请勿粘贴身份证号、社保名单、客户合同、发票、账号密码或未脱密技术资料。
+  - type: dropdown
+    id: area
+    attributes:
+      label: 问题类型
+      options:
+        - 资格自查计算
+        - 创新能力评分
+        - 材料清单或导出
+        - 页面显示或移动端
+        - 可访问性
+        - 文档内容
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 请说明实际结果和预期结果。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开……
+        2. 输入虚构数据……
+        3. 点击……
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 浏览器与设备
+      placeholder: Chrome 版本 / Windows、Safari / iPhone 等
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 补充材料
+      description: 可添加脱敏截图或错误信息。

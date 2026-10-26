@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="基于真实结构化信息，生成研发项目、高新技术产品、成果转化和创新能力说明草稿。">
+    <meta name="theme-color" content="#0f4c45">
+    <title>文件起草 · 高企申报工作台</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/workspace.css">
+    <link rel="stylesheet" href="assets/experience.css">
+    <script defer src="assets/engine.js"></script>
+    <script defer src="assets/vendor/jszip.min.js"></script>
+  </head>
+  <body class="workspace-page experience-page" data-experience="draft" data-scene-word="DRAFT">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <div class="protocol-warning" id="protocol-warning"><strong>需要启动本地工作台</strong><span>请在项目目录运行 <code>npm start</code>。</span></div>
+
+    <header class="site-header" id="top">
+      <div class="header-inner workspace-header">
+        <a class="brand" href="index.html" aria-label="返回工作台首页">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M9 32V17l13-8 13 8v15H9Z"></path><path d="M16 32V21h12v11M17 25h10M22 17v8"></path></svg></span>
+          <span class="brand-copy"><strong>高企申报工作台</strong><small>HNTE WORKSPACE</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">打开导航</span></button>
+        <nav class="site-nav workspace-nav" id="site-nav" aria-label="主导航">
+          <a data-page="dashboard" href="index.html">指挥中心</a>
+          <a data-page="audit" href="audit.html">资料审核</a>
+          <a data-page="organizer" href="organizer.html">智能整理</a>
+          <a data-page="draft" href="draft.html">文件起草</a>
+          <a data-page="guide" href="guide.html">政策指南</a>
+        </nav>
+        <a class="policy-chip" href="audit.html"><span></span> 事实优先</a>
+      </div>
+    </header>
+
+    <main id="main" class="app-main">
+      <section class="page-title-row">
+        <div>
+          <p class="eyebrow"><span>DRAFT STUDIO</span> 只组织事实，不虚构研发</p>
+          <h1>文件起草</h1>
+          <p>选择文书类型，根据技术、知识产权、研发和收入事实生成草稿，并自动关联资料库中的证据文件。</p>
+        </div>
+        <div class="title-actions">
+          <button class="button button-ghost" id="copy-draft" type="button">复制草稿</button>
+          <button class="button button-primary" id="download-draft" type="button">导出 Markdown</button>
+        </div>
+      </section>
+
+      <section class="draft-type-tabs" role="tablist" aria-label="选择起草文书">
+        <button class="is-active" role="tab" aria-selected="true" data-draft-type="rd" type="button">
+          <span>RD</span><div><strong>研发项目说明</strong><small>立项论证、创新点、过程与成果</small></div>
+        </button>
+        <button role="tab" aria-selected="false" data-draft-type="product" type="button">
+          <span>PS</span><div><strong>产品技术说明</strong><small>关键技术、指标、IP 支撑和收入</small></div>
+        </button>
+        <button role="tab" aria-selected="false" data-draft-type="transformation" type="button">
+          <span>转化</span><div><strong>成果转化说明</strong><small>成果来源、转化载体和应用成效</small></div>
+        </button>
+        <button role="tab" aria-selected="false" data-draft-type="innovation" type="button">
+          <span>综合</span><div><strong>创新能力说明</strong><small>IP、研发、转化、管理和人才</small></div>
+        </button>
+      </section>
+
+      <div class="draft-layout">
+        <section class="draft-input-panel">
+          <div class="draft-panel-head">
+            <div><p class="section-kicker">STRUCTURED INPUT</p><h2 id="draft-form-title">研发项目说明</h2></div>
+            <span id="draft-completeness">0 / 0 必填</span>
+          </div>
+          <div class="draft-quality-alert" id="draft-quality-alert">
+            <span>!</span>
+            <p>草稿只能组织已确认的事实。技术指标、日期、金额、人员和成果必须由企业原始证据支撑。</p>
+          </div>
+          <form id="draft-form" class="draft-form"></form>
+          <div class="draft-form-actions">
+            <button class="button button-primary" id="generate-draft" type="button">生成草稿</button>
+            <button class="button button-ghost" id="save-draft" type="button">保存到本机</button>
+            <span id="draft-save-status">尚未生成</span>
+          </div>
+        </section>
+
+        <section class="draft-preview-panel">
+          <div class="draft-preview-head">
+            <div><p class="section-kicker">LIVE PREVIEW</p><h2>文书预览</h2></div>
+            <span class="draft-mode"><i></i> 结构化模板</span>
+          </div>
+          <div class="draft-warning-list" id="draft-warning-list"></div>
+          <article class="draft-document" id="draft-output">
+            <div class="draft-placeholder">
+              <span>写</span>
+              <h3>先填写左侧事实信息</h3>
+              <p>点击“生成草稿”后，系统将按当前文书对应结构生成可编辑内容。</p>
+            </div>
+          </article>
+        </section>
+
+        <aside class="draft-context-panel">
+          <section class="panel context-panel">
+            <div class="panel-heading compact"><div><p class="section-kicker">SOURCE FILES</p><h2>关联证据</h2></div></div>
+            <p class="context-intro">从本地资料库挑选与当前文书相关的文件。系统只引用文件名，不自动复制正文。</p>
+            <div class="context-file-list" id="context-file-list"></div>
+            <button class="button button-ghost button-block" id="insert-evidence-index" type="button">插入当前证据索引</button>
+          </section>
+          <section class="panel fact-gate">
+            <strong>事实门槛</strong>
+            <ul>
+              <li>没有立项证据，不生成“已完成研发”结论</li>
+              <li>没有测试记录，不补造技术指标</li>
+              <li>没有合同发票，不主张收入贡献</li>
+              <li>没有转化记录，不增加转化数量</li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+
+      <section class="saved-drafts-section">
+        <div class="panel-heading">
+          <div><p class="section-kicker">SAVED DRAFTS</p><h2>已保存草稿</h2></div>
+          <span class="muted-copy">草稿保存在当前浏览器</span>
+        </div>
+        <div class="saved-drafts" id="saved-drafts">
+          <div class="empty-inline"><strong>还没有保存草稿</strong><span>生成并检查内容后，可保存到本机继续修改。</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer workspace-footer">
+      <div><strong>文件起草</strong><p>本页生成结构化草稿，不替代企业事实核验和专家判断。</p></div>
+      <div class="footer-links"><a href="guide.html">返回政策指南</a><a href="audit.html">检查资料</a></div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script defer src="assets/vendor/experience.bundle.js"></script>
+    <script type="module" src="assets/draft.js"></script>
+  </body>
+</html>

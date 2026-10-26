@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="FORESTS ONCHAIN — a minimal interactive forest experience exploring conservation, labor and verifiable natural capital.">
+    <meta name="theme-color" content="#070907">
+    <title>FORESTS ONCHAIN</title>
+    <link rel="stylesheet" href="forest.css">
+    <script defer src="forest.bundle.js"></script>
+  </head>
+  <body>
+    <a class="forest-skip" href="#main">Skip to content</a>
+    <canvas id="forest-canvas" aria-hidden="true"></canvas>
+    <div class="forest-grain" aria-hidden="true"></div>
+    <div class="forest-vignette" aria-hidden="true"></div>
+    <div class="forest-loader" id="forest-loader" aria-live="polite">
+      <span>INITIALIZING FOREST</span>
+      <i></i>
+      <small>VERIFIED ECOLOGICAL INTERFACE / 01</small>
+    </div>
+    <div class="forest-cursor" id="forest-cursor" aria-hidden="true"><span></span><b></b></div>
+    <div class="scroll-progress" aria-hidden="true"><i></i></div>
+
+    <header class="forest-header">
+      <a class="forest-logo" href="#forêts" aria-label="FORESTS ONCHAIN home">
+        <span class="tree-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>FORESTS<br>ONCHAIN</span>
+      </a>
+      <nav class="forest-nav" aria-label="Chapters">
+        <a href="#conservation"><span>02</span> Conservation</a>
+        <a href="#labor"><span>03</span> Forest labor</a>
+        <a href="#emergence"><span>04</span> Emergence</a>
+      </nav>
+      <div class="network-state">
+        <span><i></i> SIMULATED LEDGER</span>
+        <time id="forest-clock">00:00:00</time>
+      </div>
+    </header>
+
+    <aside class="chapter-rail" aria-label="Page sections">
+      <span class="rail-line" aria-hidden="true"></span>
+      <a class="is-active" href="#forêts" data-chapter="01"><b>01</b><span>ORIGIN</span></a>
+      <a href="#conservation" data-chapter="02"><b>02</b><span>CONSERVATION</span></a>
+      <a href="#labor" data-chapter="03"><b>03</b><span>LABOR</span></a>
+      <a href="#emergence" data-chapter="04"><b>04</b><span>EMERGENCE</span></a>
+      <a href="#digital" data-chapter="05"><b>05</b><span>DIGITAL</span></a>
+      <a href="#scale" data-chapter="06"><b>06</b><span>SCALE</span></a>
+    </aside>
+
+    <main id="main">
+      <section class="forest-section hero-section is-active" id="forêts" data-chapter="01">
+        <div class="hero-meta">
+          <span>CHAIN ZERO / OBSERVATION</span>
+          <span>31°14′N 121°29′E</span>
+        </div>
+        <div class="hero-type">
+          <span class="hero-index">01 / ORIGIN</span>
+          <h1>
+            <span>FORESTS</span>
+            <span><i>ON</i>CHAIN</span>
+          </h1>
+        </div>
+        <div class="hero-bottom">
+          <p>IBICASH POWERS<br>FOREST CONSERVATION<br>AT INTERNET SCALE.</p>
+          <a class="enter-link" href="#conservation">
+            <span>ENTER THE FOREST</span>
+            <b>↓</b>
+          </a>
+          <div class="hero-note">
+            <span>VERIFIED NATURAL CAPITAL</span>
+            <span>OBSERVE / VERIFY / REWARD</span>
+          </div>
+        </div>
+        <div class="drag-note" aria-hidden="true">DRAG TO LOOK · SCROLL TO MOVE</div>
+      </section>
+
+      <section class="forest-section" id="conservation" data-chapter="02">
+        <header class="chapter-header">
+          <span>02 / CONSERVATION</span>
+          <span>THE MEASUREMENT LAYER</span>
+        </header>
+        <div class="chapter-grid">
+          <h2 class="mega-title split-title">
+            <span>REWARDING</span>
+            <span>CONSERVATION</span>
+          </h2>
+          <div class="chapter-copy">
+            <span class="accent">@</span>
+            <p>
+              OBSERVATION SCALES. STANDARDS EMERGE. IBICASH CREATES THE
+              INFRASTRUCTURE TO BRING FORESTS INTO EVERY BALANCE SHEET.
+            </p>
+            <p>
+              EACH VERIFIED ECOLOGICAL SIGNAL BECOMES A DEFENSIBLE RECORD OF
+              PROTECTION: OBSERVED, STANDARDISED, AND ATTACHED TO REAL FOREST
+              VALUE INSTEAD OF AN UNVERIFIABLE CLAIM.
+            </p>
+          </div>
+        </div>
+        <div class="chapter-metrics">
+          <div><span>OBSERVATION</span><strong>48,219</strong><small>FIELD SIGNALS</small></div>
+          <div><span>VERIFICATION</span><strong>12,407</strong><small>HECTARES</small></div>
+          <div><span>REWARD LAYER</span><strong>IBICASH</strong><small>PROGRAMMABLE VALUE</small></div>
+        </div>
+      </section>
+
+      <section class="forest-section" id="labor" data-chapter="03">
+        <header class="chapter-header">
+          <span>03 / LABOR</span>
+          <span>THE LIVING ORIGIN</span>
+        </header>
+        <div class="chapter-grid chapter-grid-reverse">
+          <div class="chapter-copy chapter-copy-wide">
+            <span class="accent">$</span>
+            <p>
+              FORESTS SUSTAIN TERRESTRIAL LIFE. FUELED BY THE SUN, THEIR WORK
+              CREATES A LIVING SYSTEM FOR HUMANITY AND COUNTLESS OTHER SPECIES.
+            </p>
+            <p>
+              FROM HABITAT SERVICES TO OXYGEN PRODUCTION, SOIL TO CARBON
+              SEQUESTRATION, FORESTS PROVIDE THE CONDITIONS FOR LIFE.
+            </p>
+          </div>
+          <h2 class="mega-title split-title">
+            <span>FOREST</span>
+            <span>LABOR</span>
+          </h2>
+        </div>
+        <div class="vertical-word" aria-hidden="true">LIFE / WORK / VALUE / TIME</div>
+      </section>
+
+      <section class="forest-section emergence-section" id="emergence" data-chapter="04">
+        <header class="chapter-header">
+          <span>04 / EMERGENCE</span>
+          <span>NEW MONETARY PRIMITIVE</span>
+        </header>
+        <div class="emergence-layout">
+          <h2 class="mega-title">
+            <span>A NEW</span>
+            <span>MONETARY</span>
+            <span>PRIMITIVE</span>
+          </h2>
+          <div class="chapter-copy">
+            <span class="accent">✦</span>
+            <p>
+              A NEW MONETARY PRIMITIVE, IBICASH IS GENERATED BY VERIFIED FOREST
+              OBSERVATIONS. NOT AN ABSTRACT TOKEN, BUT AN ACCOUNTABLE RECORD OF
+              ECOLOGICAL LABOR.
+            </p>
+          </div>
+        </div>
+        <div class="emergence-footer">
+          <span>DIGITAL EMERGENCE</span>
+          <span>THE LEDGER IS A FOREST</span>
+          <span>THE FOREST IS A LEDGER</span>
+        </div>
+      </section>
+
+      <section class="forest-section digital-section" id="digital" data-chapter="05">
+        <header class="chapter-header">
+          <span>05 / DIGITAL EMERGENCE</span>
+          <span>THE FOREST BECOMES LEGIBLE</span>
+        </header>
+        <div class="digital-layout">
+          <h2 class="mega-title digital-title">
+            <span>DIGITAL</span>
+            <span>EMERGENCE</span>
+          </h2>
+          <div class="chapter-copy">
+            <span class="accent">✦</span>
+            <p>
+              NOT A SIMULATION OF REALITY, BUT A VERIFIABLE PRESENCE OF FORESTS.
+              COMPUTATION BECOMES CARE. EACH OBSERVATION BECOMES A SHARED FACT.
+            </p>
+          </div>
+        </div>
+        <div class="digital-caption">
+          <span>OBSERVATION → VERIFICATION → REWARD</span>
+          <span>THE FOREST IS ONLINE</span>
+        </div>
+      </section>
+
+      <section class="forest-section scale-section" id="scale" data-chapter="06">
+        <div class="scale-top">
+          <span>06 / SCALE</span>
+          <span>FOREST AT INTERNET SCALE</span>
+        </div>
+        <h2 class="final-title">
+          <span>FOREST</span>
+          <span>AT INTERNET</span>
+          <span>SCALE<span class="accent">.</span></span>
+        </h2>
+        <div class="final-bottom">
+          <p>BEGIN WITH ONE OBSERVATION.<br>BUILD A CONTINENT OF PROOF.</p>
+          <a href="../index.html">RETURN TO HNTE COMMAND CENTER ↗</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="ledger-bar">
+      <div class="ledger-head">
+        <span><i></i> CHAIN STATE / SIMULATED</span>
+        <span>BLOCK <b id="ledger-block">000000</b></span>
+      </div>
+      <div class="ledger-grid">
+        <div><span>OBSERVED TREES</span><strong id="ledger-trees">48,219</strong></div>
+        <div><span>VERIFIED HECTARES</span><strong id="ledger-hectares">12,407</strong></div>
+        <div><span>CARBON INDEX</span><strong id="ledger-carbon">86.4</strong></div>
+        <div><span>IBICASH ISSUED</span><strong id="ledger-issued">9,218,440</strong></div>
+      </div>
+      <div class="ledger-note">DEMO DATA ONLY · NO LIVE FINANCIAL NETWORK CONNECTED</div>
+    </footer>
+  </body>
+</html>

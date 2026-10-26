@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="高新技术企业认定申报流程、材料证据链、资格自查与100分评分模拟的开源知识库。">
+    <meta name="theme-color" content="#0f4c45">
+    <title>政策指南 · 高企申报工作台</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/experience.css">
+    <script defer src="assets/engine.js"></script>
+    <script defer src="assets/data.js"></script>
+    <script defer src="assets/app.js"></script>
+  </head>
+  <body class="experience-page" data-experience="guide" data-scene-word="POLICY">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header" id="top">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="返回工作台首页">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 44 44" role="img">
+              <path d="M9 32V17l13-8 13 8v15H9Z"></path>
+              <path d="M16 32V21h12v11M17 25h10M22 17v8"></path>
+            </svg>
+          </span>
+          <span class="brand-copy">
+            <strong>高企申报手册</strong>
+            <small>HNTE GUIDE</small>
+          </span>
+        </a>
+
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+          <span class="sr-only">打开导航</span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="主导航">
+          <a href="index.html">指挥中心</a>
+          <a href="audit.html">资料审核</a>
+          <a href="organizer.html">智能整理</a>
+          <a href="draft.html">文件起草</a>
+          <a class="is-active" href="guide.html">政策指南</a>
+        </nav>
+
+        <a class="policy-chip" href="#sources">
+          <span></span>
+          政策基准 <time datetime="2026-10-23">2026.10.23</time>
+        </a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span>OPEN SOURCE</span> 把政策条文变成可执行清单</p>
+            <h1 id="hero-title">
+              高企申报，<br>
+              先把<span class="scribble">证据链</span>做对。
+            </h1>
+            <p class="hero-lead">
+              从硬门槛自查、研发项目归集，到收入对应和专家评分。
+              一个面向企业经办人、财务、技术人员和开源贡献者的申报导航。
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#selfcheck">
+                开始 3 分钟自查
+                <span aria-hidden="true">↘</span>
+              </a>
+              <a class="button button-ghost" href="#materials">查看材料清单</a>
+            </div>
+            <div class="hero-metrics" aria-label="关键门槛概览">
+              <div><strong>365</strong><span>天注册门槛</span></div>
+              <div><strong>10%</strong><span>科技人员占比</span></div>
+              <div><strong>60%</strong><span>高新收入占比</span></div>
+              <div><strong>&gt;70</strong><span>创新能力得分</span></div>
+            </div>
+          </div>
+
+          <aside class="hero-board" aria-label="申报证据链示意">
+            <div class="board-header">
+              <span>申报证据地图</span>
+              <span class="board-status"><i></i> 可执行</span>
+            </div>
+            <div class="evidence-flow">
+              <article class="evidence-node node-ip">
+                <span class="node-index">01</span>
+                <div>
+                  <small>起点</small>
+                  <strong>核心知识产权</strong>
+                  <p>权属 × 法律状态 × 技术先进性</p>
+                </div>
+              </article>
+              <span class="flow-line" aria-hidden="true"></span>
+              <article class="evidence-node node-rd">
+                <span class="node-index">02</span>
+                <div>
+                  <small>过程</small>
+                  <strong>研发活动</strong>
+                  <p>立项 × 人员 × 费用 × 成果</p>
+                </div>
+              </article>
+              <span class="flow-line" aria-hidden="true"></span>
+              <article class="evidence-node node-ps">
+                <span class="node-index">03</span>
+                <div>
+                  <small>载体</small>
+                  <strong>主要产品 / 服务</strong>
+                  <p>关键技术 × 指标 × 交付</p>
+                </div>
+              </article>
+              <span class="flow-line" aria-hidden="true"></span>
+              <article class="evidence-node node-revenue">
+                <span class="node-index">04</span>
+                <div>
+                  <small>结果</small>
+                  <strong>收入与成长</strong>
+                  <p>合同 × 发票 × 审计口径</p>
+                </div>
+              </article>
+            </div>
+            <div class="board-callout">
+              <span aria-hidden="true">!</span>
+              <p>高企申报不是“凑材料”，而是让技术、财务、人力数据讲同一个故事。</p>
+            </div>
+          </aside>
+        </div>
+        <div class="hero-orbit orbit-one" aria-hidden="true"></div>
+        <div class="hero-orbit orbit-two" aria-hidden="true"></div>
+      </section>
+
+      <div class="policy-banner" role="note">
+        <div>
+          <span class="banner-label">政策提示</span>
+          <p>
+            本工具以现行全国性文件为基准，不代表官方认定结论。申报前必须复核
+            <strong>企业所在地区当年的通知</strong>，地方批次、附件和审核口径可能不同。
+          </p>
+        </div>
+        <a href="#sources">核对官方来源 <span aria-hidden="true">→</span></a>
+      </div>
+
+      <section class="section conditions-section" id="conditions" aria-labelledby="conditions-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">01 / HARD GATES</p>
+            <h2 id="conditions-title">八项条件，先过硬门槛</h2>
+          </div>
+          <p class="section-intro">
+            以下条件需要同时满足。先做减法：任何一项基础条件不成立，都应优先补齐，而不是继续包装申报书。
+          </p>
+        </div>
+        <div class="conditions-grid" id="conditions-grid"></div>
+      </section>
+
+      <section class="section process-section" id="process" aria-labelledby="process-title">
+        <div class="section-heading section-heading-light">
+          <div>
+            <p class="section-kicker">02 / WORKFLOW</p>
+            <h2 id="process-title">从诊断到认定后的完整流程</h2>
+          </div>
+          <p class="section-intro">
+            实际受理时间由地方通知决定。这里关注的是每个阶段必须产出的证据，而不是某个省份的固定截止日期。
+          </p>
+        </div>
+        <ol class="process-list" id="process-list"></ol>
+        <div class="process-note">
+          <span>关键顺序</span>
+          <p>先验证条件，再建设证据；先统一数据，再填报系统。不要等到系统提交前才发现财务与人事口径对不上。</p>
+        </div>
+      </section>
+
+      <section class="section selfcheck-section" id="selfcheck" aria-labelledby="selfcheck-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">03 / ELIGIBILITY CHECK</p>
+            <h2 id="selfcheck-title">3 分钟资格自查</h2>
+          </div>
+          <p class="section-intro">
+            金额统一填写“万元”。这是基于全国性规则的初筛，不读取、不上传，也不会替代专项审计和当地认定机构审核。
+          </p>
+        </div>
+
+        <div class="checker-layout">
+          <form class="checker-form" id="eligibility-form">
+            <fieldset>
+              <legend>基础条件</legend>
+              <div class="yes-no-grid">
+                <label class="field">
+                  <span>申请时注册成立已满 365 天</span>
+                  <select name="registeredOverYear" required>
+                    <option value="">请选择</option>
+                    <option value="yes">是</option>
+                    <option value="no">否 / 不确定</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>拥有主要产品核心 IP 的所有权</span>
+                  <select name="ownsCoreIp" required>
+                    <option value="">请选择</option>
+                    <option value="yes">是</option>
+                    <option value="no">否 / 不确定</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>核心 IP 对主要产品发挥技术支撑</span>
+                  <select name="coreIpSupportsProduct" required>
+                    <option value="">请选择</option>
+                    <option value="yes">是</option>
+                    <option value="no">否 / 不确定</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>核心技术可归入重点支持领域</span>
+                  <select name="inSupportedField" required>
+                    <option value="">请选择</option>
+                    <option value="yes">是</option>
+                    <option value="no">否 / 不确定</option>
+                  </select>
+                </label>
+                <label class="field field-wide">
+                  <span>申请前一年无适用重大事故或严重违法行为</span>
+                  <select name="noMajorIncident" required>
+                    <option value="">请选择</option>
+                    <option value="yes">是</option>
+                    <option value="no">否 / 不确定</option>
+                  </select>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>人员指标</legend>
+              <div class="number-grid">
+                <label class="field">
+                  <span>当年职工总数（人）</span>
+                  <input name="totalEmployees" type="number" min="0" step="1" inputmode="numeric" placeholder="全年月平均">
+                </label>
+                <label class="field">
+                  <span>当年科技人员数（人）</span>
+                  <input name="techEmployees" type="number" min="0" step="1" inputmode="numeric" placeholder="全年月平均">
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>近三年研发与销售收入</legend>
+              <div class="number-grid">
+                <label class="field">
+                  <span>最近一年销售收入（万元）</span>
+                  <input name="latestSalesWan" type="number" min="0" step="0.01" inputmode="decimal" placeholder="用于确定 5% / 4% / 3%">
+                </label>
+                <label class="field">
+                  <span>近三年销售收入合计（万元）</span>
+                  <input name="salesWan" type="number" min="0" step="0.01" inputmode="decimal" placeholder="主营 + 其他业务收入">
+                </label>
+                <label class="field">
+                  <span>近三年研发费用合计（万元）</span>
+                  <input name="rdExpensesWan" type="number" min="0" step="0.01" inputmode="decimal" placeholder="按专项报告口径">
+                </label>
+                <label class="field">
+                  <span>其中境内研发费用（万元）</span>
+                  <input name="domesticRdWan" type="number" min="0" step="0.01" inputmode="decimal" placeholder="境内实际发生">
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>近一年收入</legend>
+              <div class="number-grid">
+                <label class="field">
+                  <span>高新技术产品（服务）收入（万元）</span>
+                  <input name="highTechRevenueWan" type="number" min="0" step="0.01" inputmode="decimal" placeholder="有技术贡献依据的收入">
+                </label>
+                <label class="field">
+                  <span>企业总收入（万元）</span>
+                  <input name="totalRevenueWan" type="number" min="0" step="0.01" inputmode="decimal" placeholder="收入总额 - 不征税收入">
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">生成自查结果</button>
+              <button class="button button-quiet" type="button" id="fill-demo">填入演示数据</button>
+              <button class="button button-quiet" type="reset">清空</button>
+            </div>
+          </form>
+
+          <aside class="checker-result" id="checker-result" aria-live="polite">
+            <div class="result-empty">
+              <span class="result-illustration" aria-hidden="true">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="37"></circle>
+                  <path d="m34 51 10 10 23-25"></path>
+                </svg>
+              </span>
+              <h3>等待自查</h3>
+              <p>填完左侧信息后，这里会列出每项门槛的当前状态和需要优先复核的数据。</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section score-section" id="score" aria-labelledby="score-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">04 / SCORE SIMULATOR</p>
+            <h2 id="score-title">创新能力评分模拟</h2>
+          </div>
+          <p class="section-intro">
+            按 2016 版工作指引的指标结构估算。区间分取中值，实际分数由专家独立评价；大于 70 分才是达标。
+          </p>
+        </div>
+
+        <div class="score-layout">
+          <form class="score-form" id="score-form">
+            <article class="score-group">
+              <header>
+                <span>01</span>
+                <div><h3>知识产权</h3><p>知识产权的先进程度、核心作用、数量与取得方式</p></div>
+                <strong>30</strong>
+              </header>
+              <div class="score-fields">
+                <label class="field">
+                  <span>技术先进程度</span>
+                  <select name="ipAdvanced">
+                    <option value="8">高：7-8 分</option>
+                    <option value="6">较高：5-6 分</option>
+                    <option value="4">一般：3-4 分</option>
+                    <option value="2">较低：1-2 分</option>
+                    <option value="0">无：0 分</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>对主要产品核心支持作用</span>
+                  <select name="ipCore">
+                    <option value="8">强：7-8 分</option>
+                    <option value="6">较强：5-6 分</option>
+                    <option value="4">一般：3-4 分</option>
+                    <option value="2">较弱：1-2 分</option>
+                    <option value="0">无：0 分</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>知识产权数量</span>
+                  <select name="ipCount">
+                    <option value="8">I 类 1 项及以上</option>
+                    <option value="6">II 类 5 项及以上</option>
+                    <option value="4">II 类 3-4 项</option>
+                    <option value="2">II 类 1-2 项</option>
+                    <option value="0">暂无</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>取得方式</span>
+                  <select name="ipSource">
+                    <option value="6">包含自主研发</option>
+                    <option value="3">仅有受让、受赠、并购</option>
+                    <option value="0">无法确认</option>
+                  </select>
+                </label>
+                <label class="field field-wide">
+                  <span>参与编制国家/行业标准、检测方法或技术规范</span>
+                  <select name="standards">
+                    <option value="0">否 / 无有效佐证</option>
+                    <option value="2">是，有认证认可佐证</option>
+                  </select>
+                </label>
+              </div>
+            </article>
+
+            <article class="score-group">
+              <header>
+                <span>02</span>
+                <div><h3>科技成果转化</h3><p>近三年年平均转化数量，重应用而不只是证书</p></div>
+                <strong>30</strong>
+              </header>
+              <div class="score-fields">
+                <label class="field field-wide">
+                  <span>近三年可证实的年平均转化项数</span>
+                  <select name="transformationCount">
+                    <option value="5">5 项及以上</option>
+                    <option value="4">4 项</option>
+                    <option value="3">3 项</option>
+                    <option value="2">2 项</option>
+                    <option value="1">1 项</option>
+                    <option value="0">0 项</option>
+                  </select>
+                  <small>同一成果转化为多个产品，通常仍只计一项。</small>
+                </label>
+              </div>
+            </article>
+
+            <article class="score-group">
+              <header>
+                <span>03</span>
+                <div><h3>研发组织管理</h3><p>制度、机构、成果转化机制和人才机制</p></div>
+                <strong>20</strong>
+              </header>
+              <div class="score-fields range-grid">
+                <label class="range-field">
+                  <span>组织制度、研发辅助账 <b id="org-system-value">4</b></span>
+                  <input name="orgSystem" type="range" min="0" max="6" value="4">
+                  <small>满分 6 分</small>
+                </label>
+                <label class="range-field">
+                  <span>研发机构、科研条件、产学研 <b id="org-institution-value">4</b></span>
+                  <input name="orgInstitution" type="range" min="0" max="6" value="4">
+                  <small>满分 6 分</small>
+                </label>
+                <label class="range-field">
+                  <span>转化组织、激励与开放平台 <b id="org-transformation-value">2</b></span>
+                  <input name="orgTransformation" type="range" min="0" max="4" value="2">
+                  <small>满分 4 分</small>
+                </label>
+                <label class="range-field">
+                  <span>科技人才培养、引进和奖励 <b id="org-talent-value">2</b></span>
+                  <input name="orgTalent" type="range" min="0" max="4" value="2">
+                  <small>满分 4 分</small>
+                </label>
+              </div>
+            </article>
+
+            <article class="score-group">
+              <header>
+                <span>04</span>
+                <div><h3>企业成长性</h3><p>按三个年末净资产和三年销售收入计算增长率</p></div>
+                <strong>20</strong>
+              </header>
+              <div class="growth-grid">
+                <div class="growth-block">
+                  <h4>净资产（万元）</h4>
+                  <div class="number-grid number-grid-three">
+                    <label class="field"><span>第一年末</span><input name="netAssets1" type="number" step="0.01" min="0" value="500"></label>
+                    <label class="field"><span>第二年末</span><input name="netAssets2" type="number" step="0.01" min="0" value="650"></label>
+                    <label class="field"><span>第三年末</span><input name="netAssets3" type="number" step="0.01" min="0" value="850"></label>
+                  </div>
+                </div>
+                <div class="growth-block">
+                  <h4>销售收入（万元）</h4>
+                  <div class="number-grid number-grid-three">
+                    <label class="field"><span>第一年</span><input name="sales1" type="number" step="0.01" min="0" value="1000"></label>
+                    <label class="field"><span>第二年</span><input name="sales2" type="number" step="0.01" min="0" value="1300"></label>
+                    <label class="field"><span>第三年</span><input name="sales3" type="number" step="0.01" min="0" value="1700"></label>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </form>
+
+          <aside class="score-summary" aria-live="polite">
+            <div class="score-number-wrap">
+              <p>模拟总分</p>
+              <div class="score-number"><strong id="score-total">0</strong><span>/ 100</span></div>
+              <div class="score-status" id="score-status">等待计算</div>
+            </div>
+            <div class="score-breakdown" id="score-breakdown"></div>
+            <div class="score-rule">
+              <span aria-hidden="true">i</span>
+              <p>科技部工作指引规定：综合得分达到 70 分以上（不含 70 分）为符合要求。</p>
+            </div>
+            <a class="summary-link" href="#risks">继续检查高风险项 <span aria-hidden="true">→</span></a>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section materials-section" id="materials" aria-labelledby="materials-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">05 / EVIDENCE PACK</p>
+            <h2 id="materials-title">申报材料与证据包</h2>
+          </div>
+          <p class="section-intro">
+            清单以“能证明什么”而不是“文件叫什么”为组织方式。勾选状态仅保存在本机浏览器中。
+          </p>
+        </div>
+
+        <div class="materials-layout">
+          <div class="materials-main">
+            <div class="evidence-chain" aria-label="核心证据链">
+              <span class="chain-label">证据主线</span>
+              <div><b>IP</b><small>权利与技术</small></div>
+              <i aria-hidden="true">→</i>
+              <div><b>RD</b><small>研发过程</small></div>
+              <i aria-hidden="true">→</i>
+              <div><b>PS</b><small>产品与服务</small></div>
+              <i aria-hidden="true">→</i>
+              <div><b>Revenue</b><small>合同与收入</small></div>
+            </div>
+            <div class="materials-grid" id="materials-grid"></div>
+          </div>
+
+          <aside class="progress-card">
+            <div class="progress-ring" id="progress-ring">
+              <div>
+                <strong id="progress-percent">0%</strong>
+                <span>完成度</span>
+              </div>
+            </div>
+            <h3>材料准备进度</h3>
+            <p id="progress-copy">尚未开始勾选。建议先完成资格自查，再按证据类别准备。</p>
+            <div class="progress-meta">
+              <span><strong id="progress-done">0</strong> 已准备</span>
+              <span><strong id="progress-total">0</strong> 总数</span>
+            </div>
+            <div class="progress-actions">
+              <button class="button button-primary" id="export-checklist" type="button">导出自查报告</button>
+              <button class="button button-quiet" id="print-page" type="button">打印 / 存为 PDF</button>
+              <button class="text-button" id="reset-checklist" type="button">重置全部勾选</button>
+            </div>
+            <p class="privacy-note"><span aria-hidden="true">●</span> 数据仅保存在当前浏览器，不会上传。</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section risks-section" id="risks" aria-labelledby="risks-title">
+        <div class="section-heading section-heading-light">
+          <div>
+            <p class="section-kicker">06 / RED FLAGS</p>
+            <h2 id="risks-title">最常见的退件与核查风险</h2>
+          </div>
+          <p class="section-intro">
+            高风险通常不是“少一份文件”，而是材料之间无法形成真实、连续、可核验的证据关系。
+          </p>
+        </div>
+        <div class="risk-grid" id="risk-grid"></div>
+      </section>
+
+      <section class="section schedule-section" id="schedule" aria-labelledby="schedule-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">07 / 12-MONTH PLAN</p>
+            <h2 id="schedule-title">建议的申报节奏</h2>
+          </div>
+          <p class="section-intro">
+            T 代表地方申报窗口。政策通知发布时间不一，越接近截止日，补证据的空间越小。
+          </p>
+        </div>
+        <div class="schedule-list" id="schedule-list"></div>
+      </section>
+
+      <section class="section sources-section" id="sources" aria-labelledby="sources-title">
+        <div class="sources-layout">
+          <div class="sources-copy">
+            <p class="section-kicker">08 / SOURCES & SCOPE</p>
+            <h2 id="sources-title">政策口径与使用边界</h2>
+            <p>
+              本项目整理全国性认定规则的实践顺序，不提供“包过”判断，也不替代审计、税务或法律意见。
+              法规更新、地方通知和系统字段可能变化，提交前必须由企业对照官方原文复核。
+            </p>
+            <div class="scope-grid">
+              <div>
+                <strong>纳入</strong>
+                <p>全国性条件、100 分指标结构、通用材料证据链、认定后义务。</p>
+              </div>
+              <div>
+                <strong>不纳入</strong>
+                <p>各地奖补金额、固定批次日期、特定园区口径和未公开审核标准。</p>
+              </div>
+              <div>
+                <strong>更新原则</strong>
+                <p>只采纳主管部门、政府门户或认定系统公开信息，并保留来源与核验日期。</p>
+              </div>
+            </div>
+          </div>
+          <div class="source-list" id="source-list"></div>
+        </div>
+      </section>
+
+      <section class="contribute-section" aria-labelledby="contribute-title">
+        <div>
+          <p class="section-kicker">OPEN SOURCE</p>
+          <h2 id="contribute-title">让下一家企业少走一次弯路</h2>
+          <p>
+            欢迎补充公开、可核验的政策变化、脱敏案例和材料模板。请勿提交真实人员名单、
+            客户合同、发票、银行流水、身份证号或未脱密技术资料。
+          </p>
+        </div>
+        <div class="contribute-actions">
+          <a class="button button-light" href="docs/CONTRIBUTING.md">阅读贡献指南</a>
+          <a class="button button-outline-light" href="docs/CHECKLIST.md">Markdown 清单</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="#top">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 44 44">
+              <path d="M9 32V17l13-8 13 8v15H9Z"></path>
+              <path d="M16 32V21h12v11M17 25h10M22 17v8"></path>
+            </svg>
+          </span>
+          <span class="brand-copy"><strong>高企申报手册</strong><small>HNTE GUIDE</small></span>
+        </a>
+        <p>开源、脱敏、可核验的高企申报知识库。</p>
+      </div>
+      <div class="footer-links">
+        <a href="README.md">README</a>
+        <a href="docs/CONTRIBUTING.md">贡献指南</a>
+        <a href="LICENSE">MIT License</a>
+        <a href="#sources">政策来源</a>
+      </div>
+      <p class="footer-meta">版本 0.1.0 · 政策核验至 2026-10-23 · 非官方认定结论</p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script defer src="assets/vendor/experience.bundle.js"></script>
+  </body>
+</html>

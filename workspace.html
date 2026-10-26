@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="本地优先的高新技术企业认定资料审核、智能整理与文件起草工作台。">
+    <meta name="theme-color" content="#0f4c45">
+    <title>资料工作台 · 高企申报工作台</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/workspace.css">
+    <link rel="stylesheet" href="assets/experience.css">
+    <script defer src="assets/engine.js"></script>
+    <script defer src="assets/vendor/mammoth.browser.min.js"></script>
+    <script defer src="assets/vendor/read-excel-file.min.js"></script>
+    <script defer src="assets/vendor/jszip.min.js"></script>
+  </head>
+  <body class="workspace-page experience-page" data-experience="workspace" data-scene-word="SPACE">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <div class="protocol-warning" id="protocol-warning">
+      <strong>需要启动本地工作台</strong>
+      <span>请在项目目录运行 <code>npm start</code>，再打开终端显示的地址。直接双击 HTML 时，文件解析模块会被浏览器限制。</span>
+    </div>
+
+    <header class="site-header" id="top">
+      <div class="header-inner workspace-header">
+        <a class="brand" href="index.html" aria-label="返回工作台首页">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 44 44"><path d="M9 32V17l13-8 13 8v15H9Z"></path><path d="M16 32V21h12v11M17 25h10M22 17v8"></path></svg>
+          </span>
+          <span class="brand-copy"><strong>高企申报工作台</strong><small>HNTE WORKSPACE</small></span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span><span class="sr-only">打开导航</span>
+        </button>
+        <nav class="site-nav workspace-nav" id="site-nav" aria-label="主导航">
+          <a data-page="dashboard" href="index.html">指挥中心</a>
+          <a data-page="audit" href="audit.html">资料审核</a>
+          <a data-page="organizer" href="organizer.html">智能整理</a>
+          <a data-page="draft" href="draft.html">文件起草</a>
+          <a data-page="guide" href="guide.html">政策指南</a>
+        </nav>
+        <a class="policy-chip" href="audit.html"><span></span> 本地处理</a>
+      </div>
+    </header>
+
+    <main id="main" class="app-main">
+      <section class="workspace-hero">
+        <div class="workspace-hero-copy">
+          <p class="eyebrow"><span>LOCAL FIRST</span> 资料不离开你的浏览器</p>
+          <h1>把整套高企资料，<br>变成<span class="scribble">可审核的工作区。</span></h1>
+          <p>
+            批量导入、自动分类、材料覆盖检查、证据链整理和结构化起草。
+            适合经办人先把资料放进同一个地方，再逐项完成人工终审。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="audit.html">导入并审核资料 <span aria-hidden="true">↘</span></a>
+            <button class="button button-ghost" type="button" id="load-demo">加载演示资料</button>
+          </div>
+          <div class="trust-strip">
+            <span><i></i> PDF / Word / Excel</span>
+            <span><i></i> ZIP 批量导入</span>
+            <span><i></i> IndexedDB 本地保存</span>
+          </div>
+        </div>
+
+        <aside class="intake-preview">
+          <div class="intake-preview-head">
+            <span>资料进入工作台后</span>
+            <span class="live-indicator"><i></i> LOCAL</span>
+          </div>
+          <div class="intake-stack" id="intake-stack">
+            <div class="intake-file file-one"><span>PDF</span><div><strong>立项报告.pdf</strong><small>正在识别：研发项目</small></div><b>RD</b></div>
+            <div class="intake-file file-two"><span>DOCX</span><div><strong>产品技术说明.docx</strong><small>提取关键技术指标</small></div><b>PS</b></div>
+            <div class="intake-file file-three"><span>XLSX</span><div><strong>研发费用明细.xlsx</strong><small>归属：财务与专项报告</small></div><b>财</b></div>
+          </div>
+          <div class="intake-outcome">
+            <div><strong id="preview-score">—</strong><span>结构审核分</span></div>
+            <div><strong id="preview-files">0</strong><span>已识别文件</span></div>
+            <div><strong id="preview-missing">—</strong><span>待补类别</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="metric-grid" aria-label="工作区概览">
+        <article class="metric-card metric-primary">
+          <span>资料结构分</span>
+          <strong id="metric-score">0<small>/100</small></strong>
+          <p id="metric-readiness">等待导入资料</p>
+          <a href="audit.html">进入审核 <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="metric-card">
+          <span>资料文件</span>
+          <strong id="metric-docs">0</strong>
+          <p id="metric-parsed">尚未上传文件</p>
+          <a href="audit.html">管理资料 <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="metric-card">
+          <span>材料类别</span>
+          <strong id="metric-categories">0<small>/11</small></strong>
+          <p id="metric-missing">全部类别待补充</p>
+          <a href="organizer.html">查看分类 <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="metric-card">
+          <span>风险提示</span>
+          <strong id="metric-risks">0</strong>
+          <p id="metric-high-risk">尚无审核结果</p>
+          <a href="audit.html#findings">查看问题 <span aria-hidden="true">→</span></a>
+        </article>
+      </section>
+
+      <section class="dashboard-layout">
+        <div class="dashboard-main">
+          <div class="panel-heading">
+            <div><p class="section-kicker">WORKFLOW</p><h2>四个独立工作界面</h2></div>
+            <p>每个环节有独立页面和可保存状态，不再挤在一个长页面里。</p>
+          </div>
+          <div class="module-grid">
+            <a class="module-card module-audit" href="audit.html">
+              <span class="module-index">01</span>
+              <div class="module-icon">审</div>
+              <h3>资料审核</h3>
+              <p>拖入完整资料包，自动抽取文字、识别类别、检查缺失材料和明显风险。</p>
+              <footer><span>上传 · 分类 · 审核</span><b>进入 →</b></footer>
+            </a>
+            <a class="module-card module-organizer" href="organizer.html">
+              <span class="module-index">02</span>
+              <div class="module-icon">整</div>
+              <h3>智能整理</h3>
+              <p>按主体、IP、RD、PS、人员、财务与收入重新归组，生成建议命名和归档方案。</p>
+              <footer><span>证据链 · 重命名 · 导出</span><b>进入 →</b></footer>
+            </a>
+            <a class="module-card module-draft" href="draft.html">
+              <span class="module-index">03</span>
+              <div class="module-icon">写</div>
+              <h3>文件起草</h3>
+              <p>根据已整理的真实信息生成研发项目、产品、成果转化和创新能力说明草稿。</p>
+              <footer><span>结构化 · 可编辑 · 可导出</span><b>进入 →</b></footer>
+            </a>
+            <a class="module-card module-guide" href="guide.html">
+              <span class="module-index">04</span>
+              <div class="module-icon">政</div>
+              <h3>政策指南</h3>
+              <p>查验八项条件、100 分指标结构、材料清单、常见退件风险和官方来源。</p>
+              <footer><span>规则 · 清单 · 来源</span><b>进入 →</b></footer>
+            </a>
+          </div>
+        </div>
+
+        <aside class="dashboard-side">
+          <section class="panel project-status">
+            <div class="panel-heading compact">
+              <div><p class="section-kicker">PROJECT STATUS</p><h2>当前项目状态</h2></div>
+            </div>
+            <div class="readiness-bar"><i id="readiness-bar"></i></div>
+            <div class="readiness-copy">
+              <strong id="readiness-title">尚未建立资料包</strong>
+              <span id="readiness-copy">导入文件后自动生成结构审核结果。</span>
+            </div>
+            <ol class="next-steps" id="next-steps">
+              <li class="is-current"><span>1</span><div><strong>导入整套资料</strong><small>支持 ZIP 和文件夹</small></div></li>
+              <li><span>2</span><div><strong>确认自动分类</strong><small>人工处理低置信文件</small></div></li>
+              <li><span>3</span><div><strong>补齐企业指标</strong><small>核验硬门槛与评分</small></div></li>
+              <li><span>4</span><div><strong>生成终审材料</strong><small>起草并逐项核对</small></div></li>
+            </ol>
+            <a class="button button-primary button-block" href="audit.html">继续处理资料</a>
+          </section>
+
+          <section class="panel privacy-panel">
+            <span class="privacy-shield" aria-hidden="true">本地</span>
+            <div>
+              <strong>资料默认不上传云端</strong>
+              <p>解析、分类和保存均在当前浏览器完成。清除浏览器站点数据会同时删除工作区。</p>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="recent-section">
+        <div class="panel-heading">
+          <div><p class="section-kicker">RECENT FILES</p><h2>最近进入工作区的资料</h2></div>
+          <a href="audit.html">全部文件 →</a>
+        </div>
+        <div class="recent-list" id="recent-list">
+          <div class="empty-inline">
+            <strong>还没有资料</strong>
+            <span>先导入一整套申报文件，或加载演示资料查看完整流程。</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer workspace-footer">
+      <div>
+        <strong>高企申报工作台</strong>
+        <p>本地优先 · 开源可核验 · 不承诺申报通过</p>
+      </div>
+      <div class="footer-links">
+        <a href="README.md">README</a>
+        <a href="docs/CONTRIBUTING.md">贡献指南</a>
+        <a href="LICENSE">MIT License</a>
+        <a href="guide.html#sources">政策来源</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script defer src="assets/vendor/experience.bundle.js"></script>
+    <script type="module" src="assets/dashboard.js"></script>
+  </body>
+</html>

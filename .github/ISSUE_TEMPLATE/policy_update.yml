@@ -1,0 +1,59 @@
+name: 政策更新
+description: 提交可核验的高企认定政策变化或地方年度通知
+title: "[政策] "
+labels:
+  - policy
+body:
+  - type: markdown
+    attributes:
+      value: |
+        政策更新必须提供官方原文。自媒体解读、无日期截图和“内部消息”不能作为规则变更依据。
+  - type: input
+    id: document
+    attributes:
+      label: 文件全名与文号
+      placeholder: 例如：《高新技术企业认定管理办法》国科发火〔2016〕32号
+    validations:
+      required: true
+  - type: input
+    id: authority
+    attributes:
+      label: 发布机关
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: 官方原文链接
+      placeholder: https://
+    validations:
+      required: true
+  - type: input
+    id: dates
+    attributes:
+      label: 发布日期与生效日期
+    validations:
+      required: true
+  - type: input
+    id: region
+    attributes:
+      label: 适用地区与年度
+      placeholder: 例如：广东省，2026 年
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: 变化内容与影响
+      description: 请区分原文事实和你的理解，列明受影响的条件、计算或材料。
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: 确认
+      options:
+        - label: 我已提供主管部门公开发布的原文链接
+          required: true
+        - label: 提交内容不包含真实企业敏感信息
+          required: true
